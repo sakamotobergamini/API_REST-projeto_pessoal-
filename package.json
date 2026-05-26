@@ -1,0 +1,29 @@
+{
+  "name": "loginpage",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sakamotob/Login-page-.git"
+  },
+  "keywords": [],
+  "author": "Sakamotob",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sakamotob/Login-page-/issues"
+  },
+  "homepage": "https://github.com/Sakamotob/Login-page-#readme",
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "body-parser": "^2.2.2",
+    "ejs": "^5.0.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "prisma": "^5.22.0"
+  }
+}
