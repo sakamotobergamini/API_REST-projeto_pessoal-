@@ -112,7 +112,10 @@ app.listen(3000);
         }
     });
 
-
+/* CRIAR API de usuários
+    sakamoto
+   SYN2Qi1eteCSY7Da
+*/
 
 
 
