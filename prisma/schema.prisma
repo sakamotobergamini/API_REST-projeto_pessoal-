@@ -17,4 +17,5 @@ model User {
   email String @unique
   name  String?
   age   String
+  password String?
 } 

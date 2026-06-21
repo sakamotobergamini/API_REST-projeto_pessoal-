@@ -8,7 +8,6 @@
     <title>Login Page</title>
 </head>
     <body>
-
         <form>
         <main class="window">
 
@@ -43,4 +42,48 @@
         </form> 
 
     </body>
+        <script>
+        // URL do seu back-end
+        const API_URL = 'http://localhost:3000';
+
+        // Capturar o submit do formulário de login
+        document.querySelector('form').addEventListener('submit', async (e) => {
+            e.preventDefault(); // Impede o recarregamento da página
+            
+            // Pegue os valores dos campos (ajuste os seletores conforme seu HTML)
+            const email = document.querySelector('#email, [name="email"], input[type="email"]').value;
+            const password = document.querySelector('#password, [name="password"], input[type="password"]').value;
+            
+            // Exemplo 1: Para fazer LOGIN (se você tiver rota de login)
+            try {
+                const response = await fetch(`${API_URL}/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert('Login realizado com sucesso!');
+                    // Redirecionar ou mostrar área logada
+                    window.location.href = '/dashboard.html';
+                } else {
+                    alert('Erro: ' + data.message);
+                }
+            } catch (error) {
+                alert('Erro de conexão com o servidor');
+            }
+            
+            // Exemplo 2: Para CRIAR conta (registro) via POST /users
+            // if (isRegisterForm) {
+            //     const name = document.querySelector('#name').value;
+            //     const response = await fetch(`${API_URL}/users`, {
+            //         method: 'POST',
+            //         headers: { 'Content-Type': 'application/json' },
+            //         body: JSON.stringify({ email, name, age: 0 })
+            //     });
+            // }
+        });
+    </script>
 </html>

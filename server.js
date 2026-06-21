@@ -1,12 +1,22 @@
-
-import express from  'express';
+import express from 'express';
 import { PrismaClient } from '@prisma/client';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+// 2. SEGUNDO: configurações e inicializações
 const prisma = new PrismaClient();
-
 const app = express();
-app.use(express.json())
 
+// 3. TERCEIRO: middlewares
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname, 'views')));
+
+// ROTA PARA SERVIR O INDEX.HTML
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
+});
 
 app.post('/users', async (req, res) => {
 
@@ -71,11 +81,38 @@ app.put('/users/:id', async (req, res) => {
 
 app.listen(3000);
 
+    // ROTA DE LOGIN (valida email/senha)
+    app.post('/login', async (req, res) => {
+        const { email, password } = req.body;
+        
+        try {
+            // Busca usuário pelo email
+            const user = await prisma.user.findUnique({
+                where: { email: email }
+            });
+            
+            // Verifica se usuário existe e senha corresponde
+            if (user && user.password === password) {
+                res.status(200).json({ 
+                    success: true, 
+                    message: 'Login bem-sucedido!',
+                    user: { id: user.id, name: user.name, email: user.email }
+                });
+            } else {
+                res.status(401).json({ 
+                    success: false, 
+                    message: 'Email ou senha inválidos' 
+                });
+            }
+        } catch (error) {
+            res.status(500).json({ 
+                success: false, 
+                message: 'Erro no servidor' 
+            });
+        }
+    });
+
 /* CRIAR API de usuários
-   - criar usuário
-   - listar todos os usuários
-   - editar um usuário
-   - deletar um usuário
     sakamoto
    SYN2Qi1eteCSY7Da
 */
